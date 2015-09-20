@@ -5,12 +5,12 @@ import spock.lang.Specification
 class ConfigSlurperTest extends Specification {
     def 'should import configuration from url'() {
         expect:
-            new ConfigSlurper().parse(ConfigSlurperTest.getResource('/configuration.properties')).health as String != 'a'
+            new ConfigSlurper().parse(ConfigSlurperTest.getResource('/configuration.properties')).systemName as String != 'test'
     }
 
     def 'should import configuration from text'() {
         expect:
-            new ConfigSlurper().parse(ConfigSlurperTest.getResource('/configuration.properties').text).health != 'a'
+            new ConfigSlurper().parse(ConfigSlurperTest.getResource('/configuration.properties').text).systemName != 'test'
     }
 
     def 'should import configuration from properties'() {
@@ -18,7 +18,7 @@ class ConfigSlurperTest extends Specification {
             Properties p = new Properties()
             p.load(ConfigSlurperTest.getResourceAsStream('/configuration.properties'))
         expect:
-            new ConfigSlurper().parse(p).health as String == 'a'
+            new ConfigSlurper().parse(p).systemName as String == 'test'
     }
 
     def 'should get first endpoint info from properties'() {
@@ -91,14 +91,14 @@ class ConfigSlurperTest extends Specification {
         given:
             ConfigObject config = new ConfigSlurper().parse(ConfigSlurperTest.getResource('/configuration.groovy'))
         expect:
-            config.health == 'a'
+            config.systemName == 'test'
     }
 
     def 'should get config from script as string'() {
         given:
             ConfigObject config = new ConfigSlurper().parse(ConfigSlurperTest.getResource('/configuration.groovy').text)
         expect:
-            config.health == 'a'
+            config.systemName == 'test'
     }
 
     def 'should get nested properties from script as int'() {

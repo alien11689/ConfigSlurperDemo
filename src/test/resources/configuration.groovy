@@ -1,4 +1,4 @@
-health = 'a'
+systemName = 'test'
 endpoint {
     first {
         path = 'test'
